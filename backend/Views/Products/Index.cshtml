@@ -1,0 +1,38 @@
+@using System.Text.Json
+@{
+    ViewData["Title"] = "Products";
+    var json = (string)ViewData["Products"];
+    var data = JsonDocument.Parse(json);
+    var products = data.RootElement.GetProperty("products");
+}
+
+<div class="container mt-4">
+    <h2>Server side fetching</h2>
+   <table class="table table-striped table-bordered" id="productsTable">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>img</th>
+                <th>title</th>
+                <th>description</th>
+                <th>price</th>
+                <th>rate</th>
+                <th>stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products.EnumerateArray()) 
+            {
+                <tr>
+                    <td>@product.GetProperty("id").GetInt32()</td>
+                    <td><img src="@product.GetProperty("thumbnail").GetString()" width="50"></td>
+                    <td>@product.GetProperty("title").GetString()</td>
+                    <td>@product.GetProperty("description").GetString()</td>
+                    <td>$@product.GetProperty("price").GetDecimal()</td>
+                    <td>@product.GetProperty("rating").GetDecimal()</td>
+                    <td>@product.GetProperty("stock").GetInt32()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

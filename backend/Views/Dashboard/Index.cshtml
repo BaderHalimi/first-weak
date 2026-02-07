@@ -1,0 +1,53 @@
+@{
+    ViewData["Title"] = "لوحة التحكم";
+}
+
+<div class="text-center">
+    <h1 class="display-4">مرحباً @ViewData["userName"]</h1>
+    <p class="lead">لوحة التحكم الشخصية</p>
+</div>
+
+<div class="card mt-4" style="max-width: 500px; margin: 0 auto;">
+    <div class="card-header bg-primary text-white">
+        <h3 class="mb-0">معلومات المستخدم</h3>
+    </div>
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <strong>اسم المستخدم:</strong> @ViewData["userName"]
+            </li>
+            <li class="list-group-item">
+                <strong>البريد الإلكتروني:</strong> 
+                @if (!string.IsNullOrEmpty(ViewData["email"]?.ToString()))
+                {
+                    <a href="mailto:@ViewData["email"]">@ViewData["email"]</a>
+                }
+                else
+                {
+                    <span class="text-muted">غير محدد</span>
+                }
+            </li>
+            <li class="list-group-item">
+                <strong>رقم الهاتف:</strong> 
+                @if (!string.IsNullOrEmpty(ViewData["phoneNumber"]?.ToString()) && ViewData["phoneNumber"]?.ToString() != "غير محدد")
+                {
+                    <a href="tel:@ViewData["phoneNumber"]">@ViewData["phoneNumber"]</a>
+                }
+                else
+                {
+                    <span class="text-muted">غير محدد</span>
+                }
+            </li>
+            <li class="list-group-item">
+                <strong>تاريخ التسجيل:</strong> @ViewData["createdAt"]
+            </li>
+            <li class="list-group-item">
+                <strong>رقم المستخدم:</strong> @ViewData["userId"]
+            </li>
+        </ul>
+    </div>
+    <div class="card-footer text-center">
+        <a href="#" class="btn btn-outline-primary">تعديل الملف الشخصي</a>
+        <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger">تسجيل الخروج</a>
+    </div>
+</div>
